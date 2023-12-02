@@ -7,24 +7,18 @@ def play(sets)
     "blue"=> 0
   }
 
-  sets.each do |game|
-    cubes = game.split(',')
-    cubes.each do |cube|
-      nr_color = cube.strip.split(' ')      
-      number = nr_color[0].to_i      
-      color = nr_color[1]
-      
-      min_cubes[color] = number if min_cubes[color] < number
+  sets.each do |set|    
+    set.split(',').each do |cube|      
+      number, color = cube.strip.split(' ')      
+      min_cubes[color] = [min_cubes[color], number.to_i].max
     end
   end
 
-  min_cubes.map { |_key, value| value }.reduce{|acc, i| acc*i}
+  min_cubes.values.reduce{|acc, i| acc*i}
 end
 
 sum = 0
 File.each_line("input2-1.txt") do |line|
-  els = line.split(':')
-  sets = els[1].split(';')
-  sum += play(sets)
+  sum += play(line.split(':').last.split(';'))
 end
 puts sum
