@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-def play(sets)
+def play(game)
   min_cubes = Hash.new(0)
 
-  sets.each do |set|    
-    set.split(',').each do |cube|      
-      number, color = cube.split(' ')      
+  game.split(';').each do |set|
+    set.split(',').each do |cube|
+      number, color = cube.strip.split(' ')
       min_cubes[color] = [min_cubes[color], number.to_i].max
     end
   end
@@ -13,7 +13,5 @@ def play(sets)
   min_cubes.values.reduce(:*)
 end
 
-sum = File.readlines('input2-1.txt', chomp: true).map do |line|
-  play(line.split(':').last.split(';'))
-end.sum
+sum = File.open("input2-1.txt").each_line.map { |line| play(line.split(':').last) }.sum
 puts sum
