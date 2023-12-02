@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-available_cubes = { "red": 12, "green": 13, "blue": 14 }
+available_cubes = { 'red' => 12, 'green' => 13, 'blue' => 14 }
 
 def play(game, available_cubes)
   game.split(';').all? do |set|
     set.split(',').all? do |cube|
       number, color = cube.strip.split
-      number.to_i <= available_cubes[color.to_sym]
+      number.to_i <= available_cubes[color]
     end
   end
 end
