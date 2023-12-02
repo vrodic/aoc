@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 def play(sets)
-  min_cubes = {
-    "red"=> 0,
-    "green"=> 0,
-    "blue"=> 0
-  }
+  min_cubes = Hash(String, Int32).new(0)
 
   sets.each do |set|    
     set.split(',').each do |cube|      
