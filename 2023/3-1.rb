@@ -21,16 +21,9 @@ def mark_symbol_area(lines)
     y = 0
     line.each_char do |char|
       if symbol?(char)
-        symbol_area["#{x - 1},#{y}"] = true
-        symbol_area["#{x - 1},#{y - 1}"] = true
-        symbol_area["#{x - 1},#{y + 1}"] = true
-
-        symbol_area["#{x},#{y - 1}"] = true
-        symbol_area["#{x},#{y + 1}"] = true
-
-        symbol_area["#{x + 1},#{y}"] = true
-        symbol_area["#{x + 1},#{y - 1}"] = true
-        symbol_area["#{x + 1},#{y + 1}"] = true
+        [-1, 0, 1].each do |dx|
+          [-1, 0, 1].each { |dy| symbol_area["#{x + dx},#{y + dy}"] = true }
+        end
       end      
 
       y += 1

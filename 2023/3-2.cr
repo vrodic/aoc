@@ -10,33 +10,22 @@ end
 def gear?(char)
   char == '*'
 end
-
-lines = File.open("input3-1.txt").each_line.map {|line| line}
+file_name = "input3-1.txt"
+lines = File.open(file_name).each_line.map {|line| line}
 
 def mark_gear_area(lines)
   gear_area = Hash(String, Int32).new
 
   id = 0
   lines.each_with_index do |line, y|
-    x = 0
-    
-    line.each_char do |char|
-      if gear?(char)
-        id += 1
+    line.each_char.with_index do |char, x|
+      next unless gear?(char)
 
-        gear_area["#{x - 1},#{y}"] = id
-        gear_area["#{x - 1},#{y - 1}"] = id
-        gear_area["#{x - 1},#{y + 1}"] = id
+      id += 1
 
-        gear_area["#{x},#{y - 1}"] = id
-        gear_area["#{x},#{y + 1}"] = id
-
-        gear_area["#{x + 1},#{y}"] = id
-        gear_area["#{x + 1},#{y - 1}"] = id
-        gear_area["#{x + 1},#{y + 1}"] = id
+      [-1, 0, 1].each do |dx|
+        [-1, 0, 1].each { |dy| gear_area["#{x + dx},#{y + dy}"] = id }
       end
-
-      x += 1
     end
   end
 
@@ -47,14 +36,11 @@ gear_area = mark_gear_area(lines)
 gears = Hash(Int32, Array(Int32)).new
 
 # for some reason lines is empty after first load in crystal
-lines = File.open("input3-1.txt").each_line.map {|line| line}
-
-lines.each_with_index do |line, y|
+File.open(file_name).each_line.with_index do |line, y|
   number_str = ""
-  x = 0
   gear_id = nil
 
-  line.each_char do |char|    
+  line.each_char.with_index do |char, x|    
     if digit?(char)
       number_str += char
       if gear_area.has_key?("#{x},#{y}")
@@ -71,8 +57,6 @@ lines.each_with_index do |line, y|
       number_str = ""
       gear_id = nil
     end
-
-    x += 1
   end
 
   #crystal does not include the newline character chars of a line
