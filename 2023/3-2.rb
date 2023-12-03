@@ -19,6 +19,7 @@ def mark_gear_area(lines)
   id = 0
   lines.each_with_index do |line, y|
     x = 0
+
     line.each_char do |char|
       if gear?(char)
         id += 1
