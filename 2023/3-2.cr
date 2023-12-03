@@ -73,7 +73,11 @@ File.open(file_name).each_line.with_index do |line, y|
   end
 end
 
-sum = gears.values.map do |values|
-  values.reduce{|acc, i| acc*i} if values.size == 2
-end.compact.sum
+# for large input files, we should make sure the sum counter is 64bit
+# it's 32bit by default and crystal overflows it
+sum : Int64 = 0
+
+gears.values.each do |values|
+  sum += values.reduce{|acc, i| acc*i} if values.size == 2
+end
 puts sum
