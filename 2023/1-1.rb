@@ -7,7 +7,7 @@ def is_digit?(s)
 
 sum = 0
 l = 0
-File.readlines('input.txt', chomp: true).each do |line|    
+File.readlines('input1-1.txt', chomp: true).each do |line|    
     l += 1
     firstDigit = nil
     lastDigit = nil
@@ -29,4 +29,4 @@ File.readlines('input.txt', chomp: true).each do |line|
     puts line_sum
     sum += line_sum
 end
-print sum
+puts sum

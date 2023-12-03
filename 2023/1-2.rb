@@ -39,7 +39,7 @@ end
 sum = 0
 l = 0
 
-File.readlines("input.txt", chomp: true).each do |line|
+File.readlines("input1-1.txt", chomp: true).each do |line|
   line = replace_with_numbers(line, numbers)
   puts line
 
