@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-cards = Hash[File.readlines('input4-1.txt').collect do |line|
+cards = File.readlines('input4-1.txt').map do |line|
   card, numbers = line.split(':')
   card_id = card.split(' ')[1]
   winners, picks = numbers.split('|')  
   winners = winners.split(' ')  
   wins = picks.split(' ').count { |pick| winners.include?(pick) }
   [card_id.to_i, { copies: 1, wins: }]
-end]
+end.to_h
 
 cards.each do |id, card|  
   1.upto(card[:wins]) do |i|
@@ -18,4 +18,4 @@ cards.each do |id, card|
   end
 end
 
-puts cards.each_value.map{|card| card[:copies]}.sum
+puts cards.values.sum{|card| card[:copies]}
